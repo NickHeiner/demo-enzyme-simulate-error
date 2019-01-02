@@ -22,13 +22,14 @@ class ErrorBoundary extends React.Component {
   }
 
   render() {
+    console.log(this.state.didCatch)
     return this.state.didCatch ? 'Error caught.' : this.props.children;
   }
 }
 
 const ConnectedErrorBoundary = connect()(ErrorBoundary);
 
-it('expected behavior', () => {
+it('test works: simulates an error', () => {
   const wrapper = mount(
     <Provider store={store}>
       <ConnectedErrorBoundary>
@@ -37,27 +38,23 @@ it('expected behavior', () => {
     </Provider>
   );
 
-  expect(enzymeToJson(wrapper.find(ErrorBoundary))).toMatchSnapshot();
-
   wrapper.find(InnerComponent).simulateError(new Error('Rendering failed.'));
 
   expect(enzymeToJson(wrapper.find(ErrorBoundary))).toMatchSnapshot();
 });
 
-it('surprising behavior', () => {
+const ReduxFrame = ({children}) => <Provider store={store}>{children}</Provider>;
+
+it('test fails: simulates an error', () => {
   const wrapper = mount(
-    <Provider store={store}>
+    <ReduxFrame>
       <ConnectedErrorBoundary>
         <InnerComponent />
       </ConnectedErrorBoundary>
-    </Provider>
-  // When we include this find() call, the inner child is always rendered,
-  // even after it has been made to throw an error with simulateError().
-  ).find(ErrorBoundary);
-
-  expect(enzymeToJson(wrapper)).toMatchSnapshot();
+    </ReduxFrame>
+  );
 
   wrapper.find(InnerComponent).simulateError(new Error('Rendering failed.'));
 
-  expect(enzymeToJson(wrapper)).toMatchSnapshot();
+  expect(enzymeToJson(wrapper.find(ErrorBoundary))).toMatchSnapshot();
 });

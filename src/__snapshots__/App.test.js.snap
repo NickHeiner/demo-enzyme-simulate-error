@@ -1,45 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`expected behavior 1`] = `
-<ErrorBoundary
-  dispatch={[Function]}
->
-  <InnerComponent>
-    <span>
-      Successful render
-    </span>
-  </InnerComponent>
-</ErrorBoundary>
-`;
-
-exports[`expected behavior 2`] = `
+exports[`test works: simulates an error 1`] = `
 <ErrorBoundary
   dispatch={[Function]}
 >
   Error caught.
-</ErrorBoundary>
-`;
-
-exports[`surprising behavior 1`] = `
-<ErrorBoundary
-  dispatch={[Function]}
->
-  <InnerComponent>
-    <span>
-      Successful render
-    </span>
-  </InnerComponent>
-</ErrorBoundary>
-`;
-
-exports[`surprising behavior 2`] = `
-<ErrorBoundary
-  dispatch={[Function]}
->
-  <InnerComponent>
-    <span>
-      Successful render
-    </span>
-  </InnerComponent>
 </ErrorBoundary>
 `;
